@@ -3,6 +3,7 @@ package com.example.facedetection;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -46,16 +48,41 @@ public class MainActivity extends Activity {
     private FrameLayout layout;
     private FaceView faceView;
     private Preview mPreview;
+    private static final int CAMERA_PIC_REQUEST = 1337; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Hide the window title.
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+    }
+    
+    @Override 
+    protected void onStart() {
+    	super.onResume();
+    	setContentView(R.layout.activity_main);
+    }
+    
+    public void takePhoto(View view) {
+    	Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+    	startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST); 
+    	System.out.println("Photo Taken!");
+    }
+    
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_PIC_REQUEST) {
+        	System.out.println("CHECKED!");
+        	Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        	ImageView image = (ImageView) findViewById(R.id.photoResultView);  
+        	image.setImageBitmap(thumbnail); 
+        }
+    }
+    
+    public void startCamera(View view) {
+    	
         // Create our Preview view and set it as the content of our activity.
         try {
             layout = new FrameLayout(this);

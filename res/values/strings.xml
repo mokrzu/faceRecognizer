@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">faceDetection</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Face Detector</string>
+    <string name="hello_world">Welcome in our security app!</string>
     <string name="menu_settings">Settings</string>
+    <string name="buttonText1">Let the battle begin!</string>
+    <string name="buttonText2">Smile!</string>
 
 </resources>
